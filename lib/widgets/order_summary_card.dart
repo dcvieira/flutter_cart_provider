@@ -1,20 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../providers/cart_provider.dart';
 import '../utils/currency_formatter.dart';
 
-/// Card fixo na parte inferior da tela do carrinho com o resumo financeiro.
-///
-/// 🎓 CONCEITOS IMPORTANTES PARA SALA DE AULA:
-/// O resumo utiliza `context.watch<CartProvider>()` ou é inserido em uma tela
-/// observadora para refletir instantaneamente qualquer alteração de preços ou quantidades.
 class OrderSummaryCard extends StatelessWidget {
   const OrderSummaryCard({super.key});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final cart = context.watch<CartProvider>();
 
     return Container(
       padding: const EdgeInsets.all(20),
@@ -42,7 +34,7 @@ class OrderSummaryCard extends StatelessWidget {
                   style: TextStyle(color: Colors.grey.shade600, fontSize: 14),
                 ),
                 Text(
-                  '${cart.totalItemCount} unidades',
+                  '2 unidades',
                   style: const TextStyle(fontWeight: FontWeight.w600),
                 ),
               ],
@@ -74,13 +66,10 @@ class OrderSummaryCard extends StatelessWidget {
               children: [
                 const Text(
                   'Total a Pagar:',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  CurrencyFormatter.format(cart.totalAmount),
+                  CurrencyFormatter.format(100),
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
@@ -106,9 +95,7 @@ class OrderSummaryCard extends StatelessWidget {
                   'Finalizar Compra',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
-                onPressed: cart.items.isEmpty
-                    ? null
-                    : () => _showCheckoutSuccessDialog(context, cart),
+                onPressed: () {},
               ),
             ),
           ],
@@ -117,9 +104,9 @@ class OrderSummaryCard extends StatelessWidget {
     );
   }
 
-  void _showCheckoutSuccessDialog(BuildContext context, CartProvider cart) {
-    final totalAmount = cart.totalAmount;
-    final totalItems = cart.totalItemCount;
+  void _showCheckoutSuccessDialog(BuildContext context) {
+    final totalAmount = 100.0;
+    final totalItems = 20;
 
     showDialog(
       context: context,
@@ -152,7 +139,10 @@ class OrderSummaryCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text('Total de itens:'),
-                      Text('$totalItems', style: const TextStyle(fontWeight: FontWeight.bold)),
+                      Text(
+                        '$totalItems',
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 4),
@@ -175,7 +165,6 @@ class OrderSummaryCard extends StatelessWidget {
           FilledButton(
             onPressed: () {
               // Limpa o carrinho e fecha a tela
-              cart.clear();
               Navigator.of(ctx).pop();
               Navigator.of(context).pop(); // Volta para a tela inicial
             },

@@ -1,15 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../models/cart_item.dart';
-import '../providers/cart_provider.dart';
 import '../utils/currency_formatter.dart';
 
-/// Card para exibição e controle individual de um item dentro da lista do carrinho.
-///
-/// 🎓 CONCEITOS IMPORTANTES PARA SALA DE AULA:
-/// Os botões de incremento (+) e decremento (-) chamam diretamente os métodos do
-/// [CartProvider] via `context.read<CartProvider>()`. Ao alterar o estado,
-/// o Provider avisa a tela de carrinho para recalcular o total e a quantidade em tempo real.
 class CartItemTile extends StatelessWidget {
   final CartItem item;
 
@@ -64,14 +56,10 @@ class CartItemTile extends StatelessWidget {
           ),
         );
       },
-      onDismissed: (_) {
-        context.read<CartProvider>().removeItem(product.id);
-      },
+      onDismissed: (_) {},
       child: Card(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         child: Padding(
           padding: const EdgeInsets.all(12),
           child: Row(
@@ -140,15 +128,12 @@ class CartItemTile extends StatelessWidget {
                                   minWidth: 32,
                                   minHeight: 32,
                                 ),
-                                onPressed: () {
-                                  context
-                                      .read<CartProvider>()
-                                      .removeSingleItem(product.id);
-                                },
+                                onPressed: () {},
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 6),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 6,
+                                ),
                                 child: Text(
                                   '${item.quantity}',
                                   style: const TextStyle(
@@ -165,11 +150,7 @@ class CartItemTile extends StatelessWidget {
                                   minWidth: 32,
                                   minHeight: 32,
                                 ),
-                                onPressed: () {
-                                  context
-                                      .read<CartProvider>()
-                                      .addItem(product);
-                                },
+                                onPressed: () {},
                               ),
                             ],
                           ),

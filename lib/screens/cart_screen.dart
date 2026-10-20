@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../providers/cart_provider.dart';
 import '../widgets/cart_item_tile.dart';
 import '../widgets/order_summary_card.dart';
 
@@ -21,8 +19,8 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // 🎓 DIDÁTICA: context.watch escuta mudanças no CartProvider.
     // Sempre que o carrinho mudar, a tela se reconstrói com os novos totais.
-    final cart = context.watch<CartProvider>();
-    final items = cart.items;
+    // final cart = context.watch<CartProvider>();
+    final items = [];
 
     return Scaffold(
       appBar: AppBar(
@@ -47,7 +45,6 @@ class CartScreen extends StatelessWidget {
                       ),
                       FilledButton(
                         onPressed: () {
-                          cart.clear();
                           Navigator.of(ctx).pop();
                         },
                         child: const Text('Esvaziar'),
@@ -73,7 +70,11 @@ class CartScreen extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      Icon(Icons.info_outline, size: 18, color: Colors.blue.shade700),
+                      Icon(
+                        Icons.info_outline,
+                        size: 18,
+                        color: Colors.blue.shade700,
+                      ),
                       const SizedBox(width: 8),
                       Expanded(
                         child: Text(
@@ -128,10 +129,7 @@ class CartScreen extends StatelessWidget {
             const SizedBox(height: 24),
             const Text(
               'Seu carrinho está vazio',
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
             Text(

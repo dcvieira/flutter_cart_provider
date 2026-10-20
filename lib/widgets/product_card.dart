@@ -1,18 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/product.dart';
-import '../providers/cart_provider.dart';
 import '../screens/product_detail_screen.dart';
 import '../utils/currency_formatter.dart';
 
-/// Card que exibe as informações resumidas de um produto na vitrine.
-///
-/// 🎓 CONCEITOS IMPORTANTES PARA SALA DE AULA:
-/// 1. **`context.read<T>()`**: Usado no clique do botão "Adicionar". Como o botão só precisa
-///    disparar um método (`addItem`) e NÃO precisa se redesenhar quando o carrinho mudar,
-///    usamos `context.read` (equivalente a `Provider.of<T>(context, listen: false)`).
-/// 2. **Feedback Imediato (UX)**: Exibe uma `SnackBar` com ação de "Desfazer", reforçando
-///    a capacidade de manipular o estado reativo de forma fluida.
 class ProductCard extends StatelessWidget {
   final Product product;
 
@@ -25,9 +16,7 @@ class ProductCard extends StatelessWidget {
     return Card(
       elevation: 2,
       clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: InkWell(
         onTap: () {
           Navigator.of(context).push(
@@ -64,7 +53,7 @@ class ProductCard extends StatelessWidget {
                             strokeWidth: 2,
                             value: loadingProgress.expectedTotalBytes != null
                                 ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes!
+                                      loadingProgress.expectedTotalBytes!
                                 : null,
                           ),
                         );
@@ -184,8 +173,6 @@ class ProductCard extends StatelessWidget {
                           // 🎓 DIDÁTICA: Usamos context.read aqui!
                           // Não queremos reconstruir o ProductCard quando o carrinho mudar.
                           // Queremos apenas invocar o método addItem.
-                          final cart = context.read<CartProvider>();
-                          cart.addItem(product);
 
                           ScaffoldMessenger.of(context).hideCurrentSnackBar();
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -195,9 +182,7 @@ class ProductCard extends StatelessWidget {
                               behavior: SnackBarBehavior.floating,
                               action: SnackBarAction(
                                 label: 'Desfazer',
-                                onPressed: () {
-                                  cart.removeSingleItem(product.id);
-                                },
+                                onPressed: () {},
                               ),
                             ),
                           );

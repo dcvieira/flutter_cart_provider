@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../models/product.dart';
-import '../providers/cart_provider.dart';
 import '../utils/currency_formatter.dart';
 import '../widgets/cart_badge.dart';
 
@@ -288,7 +286,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   ),
                   onPressed: () {
                     // Adiciona o produto ao carrinho usando context.read
-                    context.read<CartProvider>().addItem(product);
+                 
 
                     ScaffoldMessenger.of(context).hideCurrentSnackBar();
                     ScaffoldMessenger.of(context).showSnackBar(
