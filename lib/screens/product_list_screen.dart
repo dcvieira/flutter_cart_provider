@@ -98,9 +98,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                     ),
                     selected: isSelected,
                     onSelected: (_) {
-                      context.read<ProductProvider>().filterByCategory(
-                        category,
-                      );
+                 
                     },
                   );
                 },
