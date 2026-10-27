@@ -1,4 +1,8 @@
+import 'package:aula_provider/providers/product_provider.dart';
+import 'package:aula_provider/services/product_service.dart'
+    show ProductService;
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'screens/product_list_screen.dart';
 
 void main() {
@@ -27,23 +31,31 @@ class AulaProviderApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'FIAP E-Commerce - Provider',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF673AB7), // Deep Purple elegante
-          brightness: Brightness.light,
+    return MultiProvider(
+      providers: [
+        // Provedor responsável pelo catálogo de produtos e requisições HTTP
+        ChangeNotifierProvider(
+          create: (_) => ProductProvider(ProductService()),
         ),
-        appBarTheme: const AppBarTheme(
-          centerTitle: false,
-          elevation: 0,
-          scrolledUnderElevation: 2,
+      ],
+      child: MaterialApp(
+        title: 'FIAP E-Commerce - Provider',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color(0xFF673AB7), // Deep Purple elegante
+            brightness: Brightness.light,
+          ),
+          appBarTheme: const AppBarTheme(
+            centerTitle: false,
+            elevation: 0,
+            scrolledUnderElevation: 2,
+          ),
+          cardTheme: const CardThemeData(elevation: 1, margin: EdgeInsets.zero),
         ),
-        cardTheme: const CardThemeData(elevation: 1, margin: EdgeInsets.zero),
+        home: const ProductListScreen(),
       ),
-      home: const ProductListScreen(),
     );
   }
 }
